@@ -84,7 +84,7 @@ router.post("/register", async (req, res) => {
     });
 
     // Send verification email
-    const verificationUrl = `http://localhost:3000/verify-email/${verificationToken}`;
+    const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${verificationToken}`;
     await sendEmail(email, "Verify your email", `Click here to verify your email: ${verificationUrl}`);
 
     res.status(201).json({
@@ -131,7 +131,7 @@ router.post("/forgot-password", async (req, res) => {
     user.resetTokenExpiry = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
     await sendEmail(email, "Reset your password", `Click to reset your password: ${resetUrl}`);
 
     res.json({ message: "Password reset email sent" });

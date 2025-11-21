@@ -75,7 +75,7 @@ if (role === "mentor") {
 
 
     // Create a clickable verification link
-    const verificationUrl = `http://localhost:5173/verify-email?token=${verificationToken}`;
+    const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${verificationToken}`;
 
     const htmlMessage = `
       <h2>Welcome to MentorConnect, ${name}!</h2>
@@ -161,7 +161,7 @@ router.post("/forgot-password", async (req, res) => {
     user.resetTokenExpiry = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    const resetUrl = `http://localhost:5173/reset-password?token=${resetToken}`;
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
     
     const htmlMessage = `
       <h2>Password Reset Request</h2>
