@@ -10,15 +10,19 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(express.json());
 app.use(cors({
   origin: [
-    process.env.CLIENT_URL || "https://mentorconnect-frontend-eight.vercel.app/",
+    process.env.CLIENT_URL || "https://mentorconnect-frontend-eight.vercel.app", 
     "http://localhost:5173"
   ],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
 
+
+app.options("*", cors());
+app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
