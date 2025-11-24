@@ -12,18 +12,20 @@ const app = express();
 // =====================
 // CORS
 // =====================
-app.use(cors({
+const corsOptions = {
   origin: [
     process.env.CLIENT_URL || "https://mentorconnect-frontend-eight.vercel.app",
     "http://localhost:5173"
   ],
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["GET","HEAD","PUT","PATCH","POST","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type","Authorization"],
   credentials: true
-}));
+};
 
-// Preflight (Express 5)
-app.options(/.*/, cors());
+app.use(cors(corsOptions));
+
+// Handle preflight requests manually
+app.options("*", cors(corsOptions));
 
 // =====================
 // Middleware
