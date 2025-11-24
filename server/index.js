@@ -1,3 +1,5 @@
+// server/index.js
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -10,10 +12,8 @@ dotenv.config();
 const app = express();
 
 // =====================
-// CORS
+// CORS Configuration
 // =====================
-import cors from "cors";
-
 const corsOptions = {
   origin: [
     process.env.CLIENT_URL || "https://mentorconnect-frontend-eight.vercel.app",
@@ -24,12 +24,11 @@ const corsOptions = {
   credentials: true
 };
 
-// Add CORS to all routes
+// Enable CORS for all routes
 app.use(cors(corsOptions));
 
-// Handle preflight requests
+// Handle preflight OPTIONS requests for all routes
 app.options(/.*/, cors(corsOptions));
-
 
 // =====================
 // Middleware
@@ -43,7 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/mentors", mentorRoutes);
 
 // =====================
-// MongoDB connection
+// MongoDB Connection
 // =====================
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
@@ -58,7 +57,7 @@ app.use((err, req, res, next) => {
 });
 
 // =====================
-// Server
+// Start Server
 // =====================
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
