@@ -12,6 +12,8 @@ const app = express();
 // =====================
 // CORS
 // =====================
+import cors from "cors";
+
 const corsOptions = {
   origin: [
     process.env.CLIENT_URL || "https://mentorconnect-frontend-eight.vercel.app",
@@ -22,10 +24,12 @@ const corsOptions = {
   credentials: true
 };
 
+// Add CORS to all routes
 app.use(cors(corsOptions));
 
-// Handle preflight requests manually
-app.options("*", cors(corsOptions));
+// Handle preflight requests
+app.options(/.*/, cors(corsOptions));
+
 
 // =====================
 // Middleware
